@@ -1,10 +1,11 @@
+#This is used for prioritizing the queue with closest dist b/n 2 modes and its heuristic values
 import heapq
 
 #The syntax on A* Algo is used as such
 def a_star(graph, heuristic, start, goal):
 
 #Name of list is open_list. heuristic[start], start gives node name and its heuristic value.
-#Also visited is a variable used to set the queue
+#Also visited is a variable used to set the queue so that nodes dont repeat. Set is the function tht does the work
     open_list =[(heuristic[start], start)]
     visited = set()
 
