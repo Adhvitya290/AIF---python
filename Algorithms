@@ -1,7 +1,7 @@
 #This is used for prioritizing the queue with closest dist b/n 2 modes and its heuristic values
 import heapq
 
-#The syntax on A* Algo is used as such
+#The syntax and its function on A* Algo is used as such
 def a_star(graph, heuristic, start, goal):
 
 #Name of list is open_list. heuristic[start], start gives node name and its heuristic value.
@@ -23,7 +23,7 @@ def a_star(graph, heuristic, start, goal):
             visited.add(current)
             print("Visited:",current)
 
-#the neighboring nodes are have their distance, and cost calculated to find the closest distance.
+#the neighboring nodes have their distance, and cost calculated to find the closest distance.
 #heappush adds the needed/'closest distance' nodes to the visited and checks its cost and dist and if it in set 
             for neighbour, distance in graph[current]:
                 if neighbour not in visited:
