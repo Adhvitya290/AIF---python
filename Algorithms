@@ -54,7 +54,206 @@ heuristic ={
 a_star(graph, heuristic, 'A','F')
 
 
+from collections import deque
+
+# Smart City road network
+city = {
+    "Home": ["School", "Market"],
+    "School": ["Home", "Hospital"],
+    "Market": ["Home", "Mall"],
+    "Hospital": ["School", "Evacuation Center"],
+    "Mall": ["Market", "Evacuation Center"],
+    "Evacuation Center": ["Hospital", "Mall"]
+}
+
+# Starting location
+start = "Home"
+
+# BFS
+queue = deque([[start]])
+visited = set()
+
+while queue:
+    path = queue.popleft()
+    location = path[-1]
+
+    if location in visited:
+        continue
+
+    visited.add(location)
+
+    # Check for evacuation center
+    if location == "Evacuation Center":
+        print("Nearest Evacuation Center Found!")
+        print("Safe Route:", " -> ".join(path))
+        break
+
+    # Explore connected roads
+    for road in city[location]:
+        if road not in visited:
+            queue.append(path + [road])
 
 
+# BFS - Breadth First Search
+
+from collections import deque
+
+graph = {
+    0: [1, 2],
+    1: [3, 4],
+    2: [],
+    3: [],
+    4: []
+}
+
+visited = set()
+
+# DFS in Python
+
+graph = {
+    0: [1, 2],
+    1: [3, 4],
+    2: [],
+    3: [],
+    4: []
+}
+
+visited = set()
+
+def dfs(node):
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+
+        for neighbour in graph[node]:
+            dfs(neighbour)
+
+# Start DFS from node 0
+dfs(0)
+
+
+queue = deque([0])
+
+while queue:
+    node = queue.popleft()
+
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+
+        for neighbour in graph[node]:
+            queue.append(neighbour)
+
+
+# 1. The hill function: f(x) = -x^2 + 4
+def hill(x):
+    return -(x**2) + 4
+
+# 2. Starting setup
+x = -3.0          # Start far to the left
+step_size = 0.1   # Take small steps
+
+# 3. Climb the hill
+# Keep moving right as long as the next step is higher than where we are
+while hill(x + step_size) > hill(x):
+    x = x + step_size  # Take a step right
+
+# 4. Print the peak
+print("Peak found at x =", round(x, 2))
+print("Highest value =", round(hill(x), 2))
+
+# Map Coloring using CSP and Backtracking
+
+# Step 1: Define the map (CSP variables and constraints)
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+
+# Step 2: Define available colors
+colors = ['Red', 'Green', 'Blue']
+
+# Step 3: Store the color assigned to each region
+assignment = {}
+
+
+# Step 4: Check whether a color can be assigned
+def is_safe(region, color):
+    for neighbor in graph[region]:
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+    return True
+
+
+# Step 5: Backtracking function
+def backtrack():
+    
+    # If all regions are colored, solution is found
+    if len(assignment) == len(graph):
+        return True
+
+    # Select an uncolored region
+    for region in graph:
+        if region not in assignment:
+            
+            # Try each available color
+            for color in colors:
+                
+                # Check whether the color is safe
+                if is_safe(region, color):
+                    
+                    # Assign the color
+                    assignment[region] = color
+                    
+                    # Recursively color the remaining regions
+                    if backtrack():
+                        return True
+                    
+                    # If it does not work, remove the color
+                    del assignment[region]
+
+            # No color works for this region
+            return False
+
+
+# Step 6: Start the backtracking algorithm
+if backtrack():
+    print("Map Coloring Solution:")
+    for region, color in assignment.items():
+        print(region, "=", color)
+else:
+    print("No solution exists.")
+
+def is_safe(course, slot, assignment, conflict_graph):
+  # Check if any already scheduled neighboring (conflicting) course has the same slot
+  for neighbor in conflict_graph[course]:
+    if neighbor in assignment and assignment[neighbor] == slot:
+      return False
+  return True
+
+
+def solve_timetable(courses_list, time_slots, assignment, index, conflict_graph):
+  # Base case: if all courses are assigned
+  if index == len(courses_list):
+    return True
+
+  current_course = courses_list[index]
+
+  for slot in time_slots:
+    if is_safe(current_course, slot, assignment, conflict_graph):
+      assignment[current_course] = slot  # Assign slot
+
+      # Recur for the next course
+      if solve_timetable(
+          courses_list, time_slots, assignment, index + 1, conflict_graph
+      ):
+        return True
+
+      # Backtrack if assignment doesn't lead to a solution
+      del assignment[current_course]
+
+  return False
 
 
