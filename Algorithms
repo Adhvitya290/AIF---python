@@ -257,4 +257,49 @@ def solve_timetable(courses_list, time_slots, assignment, index, conflict_graph)
 
   return False
 
+###3.1)## Rule-Based Expert System for Basic Medical Diagnosis
 
+print("==========================================")
+print("   BASIC MEDICAL DIAGNOSIS EXPERT SYSTEM")
+print("==========================================")
+
+print("\nAnswer the following questions with yes or no.\n")
+
+fever = input("1. Do you have fever? ").lower()
+cough = input("2. Do you have cough? ").lower()
+cold = input("3. Do you have cold/runny nose? ").lower()
+headache = input("4. Do you have headache? ").lower()
+body_pain = input("5. Do you have body pain? ").lower()
+sore_throat = input("6. Do you have sore throat? ").lower()
+
+print("\n========== DIAGNOSIS ==========")
+
+# Rule 1
+if fever == "yes" and cough == "yes" and body_pain == "yes":
+    print("Possible Condition: Flu-like illness")
+    print("Advice: Take adequate rest and consult a healthcare professional.")
+
+# Rule 2
+elif cold == "yes" and cough == "yes" and sore_throat == "yes":
+    print("Possible Condition: Common cold-like illness")
+    print("Advice: Stay hydrated and consult a healthcare professional if symptoms persist.")
+
+# Rule 3
+elif fever == "yes" and headache == "yes" and body_pain == "yes":
+    print("Possible Condition: Fever with body ache")
+    print("Advice: Consult a healthcare professional for proper evaluation.")
+
+# Rule 4
+elif headache == "yes" and fever == "no":
+    print("Possible Condition: Headache")
+    print("Advice: Rest, stay hydrated, and seek medical advice if severe or persistent.")
+
+# Rule 5
+elif sore_throat == "yes" and cough == "yes":
+    print("Possible Condition: Throat/respiratory infection")
+    print("Advice: Consult a healthcare professional if symptoms worsen.")
+
+# Rule 6
+else:
+    print("Condition: Symptoms do not match the available rules.")
+    print("Advice: Consult a healthcare professional for proper diagnosis.")
